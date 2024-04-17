@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee1334e2cf744cefa3adbaaa51abb60d, type: 3}
+  m_Name: Medium
+  m_EditorClassIdentifier: 
+  enemiesToSpawn:
+  - {fileID: 3245057162544969881, guid: eb3ef52599cb4be438506f1b156816a1, type: 3}
+  - {fileID: 3245057162544969881, guid: 0a439568212f47345ba8a1ebf631d1be, type: 3}
