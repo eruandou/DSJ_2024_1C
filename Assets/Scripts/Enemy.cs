@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AbstractFactory;
 using State.Enemy;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public enum EnemyStates
     Death
 }
 
-public class Enemy : MonoBehaviour, IDamageable
+public class Enemy : MonoBehaviour, IDamageable, IProduct
 {
     [SerializeField] private EnemyData data;
     private int currentHealth;
@@ -30,22 +31,22 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        currentHealth = data.MaxHealth;
-
-        var idleState = new EnemyIdleState(data.IdleWaitTime, GetIsPlayerNear);
-        var deathState = new EnemyDeathState();
-        var pursuitState = new EnemyPursuitState(transform, data.Speed, GetIsPlayerNear, GetNearestPlayer);
-        var patrolState = new EnemyPatrolState(patrolPoints, transform, data.Speed, data.ThresholdToPatrolPoint,
-            GetIsPlayerNear);
-
-        enemyStates.Add(idleState);
-        enemyStates.Add(deathState);
-        enemyStates.Add(pursuitState);
-        enemyStates.Add(patrolState);
-
-        currentState = idleState;
-
-        SubscribeToStateChange();
+        // currentHealth = data.MaxHealth;
+        //
+        // var idleState = new EnemyIdleState(data.IdleWaitTime, GetIsPlayerNear);
+        // var deathState = new EnemyDeathState();
+        // var pursuitState = new EnemyPursuitState(transform, data.Speed, GetIsPlayerNear, GetNearestPlayer);
+        // var patrolState = new EnemyPatrolState(patrolPoints, transform, data.Speed, data.ThresholdToPatrolPoint,
+        //     GetIsPlayerNear);
+        //
+        // enemyStates.Add(idleState);
+        // enemyStates.Add(deathState);
+        // enemyStates.Add(pursuitState);
+        // enemyStates.Add(patrolState);
+        //
+        // currentState = idleState;
+        //
+        // SubscribeToStateChange();
     }
 
     public void GetDamage(int damageAmount)
@@ -59,9 +60,9 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        var deltaTime = Time.deltaTime;
-        // stateMachine.ExecuteState();
-        currentState.OnExecute(deltaTime);
+        // var deltaTime = Time.deltaTime;
+        // // stateMachine.ExecuteState();
+        // currentState.OnExecute(deltaTime);
     }
 
     private Professor GetNearestPlayer()
@@ -115,7 +116,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void OnDestroy()
     {
-        UnsubscribeToStateChanges();
+        // UnsubscribeToStateChanges();
     }
 
     private void SubscribeToStateChange()

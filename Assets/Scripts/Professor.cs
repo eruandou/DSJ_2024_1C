@@ -1,5 +1,9 @@
 using System;
 using System.Collections.Generic;
+using AbstractFactory;
+using Command;
+using Flyweight;
+using Helpers;
 using Prototype;
 using Strategy;
 using UnityEngine;
@@ -17,7 +21,7 @@ public class Professor : MonoBehaviour
 {
     [SerializeField] private Transform interactionPoint;
     [SerializeField] private ProfessorData data;
-    [SerializeField] private List<int> myStack;
+    [SerializeField] private EnemyCreationCommandGenerator enemyCommandGenerator;
     private IInteractable latestInteractable;
     private List<IFireWeapon> weapons;
     private IFireWeapon currentFireWeapon;
@@ -46,6 +50,25 @@ public class Professor : MonoBehaviour
         {
             Shoot();
         }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            GenerateEnemy();
+        }
+    }
+
+    private void GenerateEnemy()
+    {
+        if (!enemyCommandGenerator.TryGenerateEnemyCreationCommand(EnemyFactory.SHADOW_HEDGEHOG_ENEMY,
+                RandomPosition.GetRandomPositionInLimits(), out var enemyCommand))
+        {
+            return;
+        }
+
+        // var enemyInstantiateCommand =
+        // enemyCommandGenerator.TryGenerateEnemyCreationCommand(EnemyFactory.SHADOW_HEDGEHOG_ENEMY,
+        // RandomPosition.GetRandomPositionInLimits());
+        EventQueue.EventQueue.Instance.EnqueueCommand(enemyCommand);
     }
 
     private void Shoot()
@@ -92,10 +115,10 @@ public class Professor : MonoBehaviour
     {
         var horizontal = Input.GetAxisRaw("Horizontal");
         var vertical = Input.GetAxisRaw("Vertical");
-
         Vector3 movementInput = new Vector3(horizontal, 0, vertical).normalized;
 
-        transform.position += movementInput * (Time.deltaTime * data.MovementSpeed);
+        var movementCommand = new MovementCommand(movementInput, data.MovementSpeed, transform, Time.deltaTime);
+        EventQueue.EventQueue.Instance.EnqueueCommand(movementCommand);
     }
 
     private void TryInteract()

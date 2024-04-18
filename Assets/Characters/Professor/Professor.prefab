@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionPoint: {fileID: 3156818952701267793}
   data: {fileID: 11400000, guid: 0827d7aeec4f18244a57b5e8b1880c09, type: 2}
+  enemyCommandGenerator: {fileID: 0}
 --- !u!54 &4393977942685049320
 Rigidbody:
   m_ObjectHideFlags: 0

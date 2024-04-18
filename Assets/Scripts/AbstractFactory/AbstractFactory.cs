@@ -3,26 +3,21 @@ using UnityEngine;
 
 namespace AbstractFactory
 {
-    public abstract class AbstractFactory<T> where T: IProduct
+    public abstract class AbstractFactory<T> where T : IProduct
     {
         public abstract T CreateProduct(string productCode);
-    }
-
-    public abstract class BuyableObjectFactory
-    {
-        public abstract BuyableProduct CreateProduct(string productCode);
     }
 
     public interface IProduct
     {
     }
 
-    public interface BuyableProduct : IProduct
+    public interface IBuyableProduct : IProduct
     {
         float Price { get; }
     }
 
-    public class Shoe : BuyableProduct
+    public class Shoe : IBuyableProduct
     {
         public float Price { get; private set; }
         public string Material { get; private set; }
